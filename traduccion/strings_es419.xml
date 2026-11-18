@@ -23,16 +23,16 @@
     <!-- Se agrega "ES" para distinguir el ícono de la app original instalada al lado -->
     <string name="app_name">PES 2017 ES</string>
     <string name="wordmark">PES17 Recompilado para Android</string>
-    <string name="play">¡A JUGAR!</string>
-    <string name="entry_select_folder">ELEGIR CARPETA DEL JUEGO</string>
-    <string name="entry_install">INSTALAR DESDE IMAGEN ISO</string>
-    <string name="entry_settings">AJUSTES</string>
+    <string name="play">Jugar</string>
+    <string name="entry_select_folder">Elegir carpeta del juego</string>
+    <string name="entry_install">Instalar desde imagen ISO</string>
+    <string name="entry_settings">Ajustes</string>
     <string name="graphics_driver">Controlador gráfico</string>
     <string name="view_log">Registro</string>
-    <string name="check_updates">BUSCAR ACTUALIZACIONES</string>
-    <string name="quit_launcher">SALIR</string>
+    <string name="check_updates">Buscar actualizaciones</string>
+    <string name="quit_launcher">Salir</string>
     <string name="direct_launch">Empezar el partido apenas se abra la app</string>
-    <string name="detail_default_title">MENÚ PRINCIPAL</string>
+    <string name="detail_default_title">Menú principal</string>
     <string name="detail_default_text">Elige una opción: aquí verás sus detalles y al tocarla se ejecuta de inmediato.</string>
     <string name="footer">%1$s ● Controlador: %2$s ● Compilación %3$s, %4$s ● PORT NO OFICIAL HECHO POR FANS. SIN RELACIÓN CON KONAMI. USA TU PROPIA COPIA DEL JUEGO.</string>
     <string name="version_tag">%1$s · compilación %2$d · EUROPA</string>
@@ -52,7 +52,7 @@
     <string name="unknown_reason">sin motivo indicado</string>
 
     <!-- ===================== Botones generales ===================== -->
-    <string name="back">◀ Volver</string>
+    <string name="back">‹  Volver</string>
     <string name="cancel">Cancelar</string>
     <string name="close">Cerrar</string>
     <string name="done">Listo</string>
@@ -101,7 +101,7 @@
     <string name="install_game">Instalar los archivos del juego</string>
     <string name="install_hint">Elige una imagen de disco (.iso) de tu propia copia de PES 2017, o la carpeta donde extrajiste sus archivos (default.xex y los archivos .cpk). Solo se copian a la app los archivos que el juego necesita; se requieren unos 7 GB libres.</string>
     <string name="begin_install">Instalar</string>
-    <string name="install_and_play">INSTALAR Y JUGAR</string>
+    <string name="install_and_play">Instalar y jugar</string>
     <string name="choose_source">Explorar el almacenamiento del teléfono</string>
     <string name="pick_with_files">Elegir con la app Archivos</string>
     <string name="pick_folder">Copiar una carpeta del juego ya extraída (no requiere permiso)</string>
@@ -122,10 +122,10 @@
     <!-- ===================== Pestañas de Ajustes ===================== -->
     <string name="settings_hint">Imagen, rendimiento, controles y archivos del juego de este port.</string>
     <string name="settings_help_strip">Cada cambio se guarda al instante y se aplica cuando empieza el siguiente partido. Presiona Volver para regresar al menú.</string>
-    <string name="tab_graphics">GRÁFICOS Y RENDIMIENTO</string>
-    <string name="tab_controls">CONTROLES Y SONIDO</string>
-    <string name="tab_advanced">AVANZADO</string>
-    <string name="tab_files">ARCHIVOS DEL JUEGO</string>
+    <string name="tab_graphics">Gráficos</string>
+    <string name="tab_controls">Idioma y controles</string>
+    <string name="tab_advanced">Avanzado</string>
+    <string name="tab_files">Archivos</string>
     <string name="advanced_warning">Para experimentar y resolver problemas. Los valores predeterminados sirven para la mayoría de los teléfonos; las pestañas de Gráficos y Rendimiento cubren los cambios habituales.</string>
 
     <!-- ===================== Secciones ===================== -->
@@ -365,4 +365,14 @@
     <string name="update_failed">La descarga falló. Abre la página de versiones.</string>
     <string name="open_page">Página de versiones</string>
     <string name="skip_version">Omitir esta versión</string>
+    <!-- ===================== Textos nuevos de esta versión ===================== -->
+    <!-- Encabezado de la pantalla principal rediseñada -->
+    <string name="titulo_app">PES 2017</string>
+    <string name="insignia_es">ES</string>
+    <!-- Selector "Idioma del juego" (pestaña Idioma y controles) -->
+    <string name="section_language">Idioma del juego</string>
+    <string name="idioma_latam">Español latinoamericano</string>
+    <string name="idioma_espana">Español de España</string>
+    <string name="idioma_ingles">English (original del port)</string>
+    <string name="idioma_hint">Es el idioma que la “consola” le informa al juego. Al iniciar, el juego muestra sus pantallas de idioma: elige Español. Los textos y comentarios dependen de los paquetes de idioma (dt20_*.cpk) que traiga tu ISO; si no trae la variante latinoamericana, el juego usa el español disponible. Se aplica la próxima vez que inicie el juego.</string>
 </resources>

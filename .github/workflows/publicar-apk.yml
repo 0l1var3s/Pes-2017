@@ -1,0 +1,37 @@
+# Publica el APK de la carpeta apk/ como un "Release" de GitHub, para poder
+# descargarlo fácilmente desde el teléfono (pestaña Releases del repositorio).
+name: Publicar APK
+
+on:
+  push:
+    paths:
+      - "apk/*.apk"
+      - "apk/NOTAS.md"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Datos de la versión
+        id: version
+        run: |
+          archivo=$(ls apk/*.apk | head -n 1)
+          etiqueta=$(basename "$archivo" .apk | sed 's/^PES-2017-ES-//')
+          echo "archivo=$archivo" >> "$GITHUB_OUTPUT"
+          echo "etiqueta=$etiqueta" >> "$GITHUB_OUTPUT"
+          echo "SHA-256: $(sha256sum "$archivo" | cut -d' ' -f1)"
+
+      - name: Crear o actualizar el Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.etiqueta }}
+          name: PES 2017 ES ${{ steps.version.outputs.etiqueta }}
+          body_path: apk/NOTAS.md
+          files: ${{ steps.version.outputs.archivo }}
+          make_latest: true

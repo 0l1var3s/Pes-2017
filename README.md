@@ -1,93 +1,106 @@
 # PES 2017 (port recompilado) — Versión en español latinoamericano
 
-Modificación del APK `PES-2017-v0.2.0-425cb0d` (launcher del port recompilado
-de PES 2017 para Android, motor Vulkan arm64). Incluye los scripts para volver
-a generar el APK modificado a partir del original.
+Modificación del port recompilado de PES 2017 para Android (proyecto oficial
+[dzakyraf/pes2017-recomp](https://github.com/dzakyraf/pes2017-recomp), versión 0.2.0, la más reciente),
+con la interfaz y el juego en **español**, optimizada para el **Galaxy S24 Ultra**.
 
 > Esta app **no incluye datos del juego**: necesitas tu propia copia de
-> PES 2017 (imagen `.iso` o carpeta con `default.xex` y los `.cpk`).
+> PES 2017 de **Xbox 360 (Europa)** (imagen `.iso` o carpeta con `default.xex` y los `.cpk`).
 
-## Validación del APK original
+![Pantalla principal](docs/vista_previa_menu.png)
+*Vista previa aproximada de la pantalla principal (tamaño del S24 Ultra en horizontal).*
 
-| Dato | Valor |
-|---|---|
-| Paquete original | `com.pes2017.recomp` |
-| Versión | 0.2.0 (425cb0d), versionCode 40 |
-| Android mínimo | 8.0 (API 26), objetivo API 35 |
-| Arquitectura | solo `arm64-v8a` |
-| Requisitos | Vulkan 1.3 (`android.hardware.vulkan.version` obligatorio) |
-| Motor | `libpes17.so` (157 MB) + hooks nativos |
-| Interfaz | Kotlin + layouts XML clásicos |
+## Descargar
 
-El RAR (2 partes) se extrajo bien y el APK se decompiló y recompiló sin errores.
+- **Releases**: pestaña [Releases](../../releases) del repositorio → `PES-2017-ES-v0.2.0-es.2.apk`.
+- **Directo**: [apk/PES-2017-ES-v0.2.0-es.2.apk](apk/PES-2017-ES-v0.2.0-es.2.apk) → botón "Download raw".
 
-## Cambios
+ID `com.pes2017.recomp.es`, nombre **"PES 2017 ES"**: se instala **junto** a la app original
+sin borrarla. Si ya tenías una versión ES anterior, se instala encima y conserva tus partidas.
 
-1. **Español latinoamericano** — `traduccion/strings_es419.xml`
-   * Los 306 textos propios de la app traducidos y con comentarios en español.
-   * Reemplazan los textos por defecto, así que la app se ve en español aunque
-     el teléfono esté en otro idioma.
-   * 27 textos más que estaban fijos en el código (botones CAPTURA / GRABAR MACRO,
-     HUD, aviso de ahorro de batería, aviso de Vulkan, etc.):
-     `scripts/traducir_smali.py`.
-   * Se verifican automáticamente los marcadores `%1$s`, `%2$d`, `%%` para que
-     ningún texto pueda cerrar la app.
-2. **Interfaz** — `scripts/aplicar_mejoras.py`
-   * El menú principal ajusta solo el tamaño del texto (los textos en español
-     son más largos) y nunca los corta.
-   * El panel de detalles tiene texto más grande, más líneas visibles y usa mejor
-     el espacio en horizontal.
-   * Las pestañas de Ajustes pueden ocupar 2 líneas y las ayudas tienen letra más grande.
-3. **Estabilidad y adaptación gráfica**
-   * `parches/Estabilidad.smali`: en teléfonos de **6 GB de RAM o menos** se
-     activa solo el *Modo de poca memoria* (PES17_NO_SHADOW), como recomienda
-     la propia app, para que Android no cierre el partido. Si personalizaste
-     los ajustes (perfil "Personalizado"), se respeta lo que elegiste.
-   * En Android 9 o superior el partido usa **toda la pantalla, incluida la zona
-     del notch / cámara perforada**.
-   * Los perfiles automáticos (Bajo/Medio/Alto según el teléfono) de la app
-     original se mantienen. Como el ID es nuevo, arrancan desde cero y se
-     vuelven a detectar en el primer inicio.
-4. **Optimizado para Galaxy S24 Ultra** (`Estabilidad.perfilS24`, modelos `SM-S928*`).
-   En el primer inicio, si todavía no configuraste nada, se aplica:
-   * Calidad de renderizado del partido **100%** (la Adreno 750 tiene margen de sobra).
-   * **FSR** activado: escala con nitidez de 720p a la pantalla QHD+ (3120×1440).
-   * **MSAA** activado (líneas de la cancha sin cortes).
-   * **Bajar calidad al calentarse** activado: cuando el S24 Ultra se calienta
-     pierde algo de nitidez en vez de tirones.
-   * **Pantalla fija a 60 Hz**: el juego va a 60 FPS; 120 Hz solo gasta batería.
-   * **Pantalla panorámica**: llena la pantalla 19.5:9 sin barras negras
-     (los menús se estiran a lo ancho; se puede desactivar en Ajustes → Pantalla).
-   * Multiplicador interno en 1x. Puedes probar 2x (2560×1440) en Ajustes,
-     pero calienta bastante.
-   Después puedes cambiar todo libremente; el perfil queda como "Personalizado".
-5. **Código de apkvision quitado.** El sitio de descarga había agregado código
-   al APK que **forzaba el idioma inglés**, mostraba un aviso "APKVISION.ORG" y
-   consultaba "actualizaciones" por internet abriendo el navegador. No es parte
-   del port y se eliminó.
-6. **ID distinto** — `com.pes2017.recomp.es`, nombre **"PES 2017 ES"**. Se
-   instala **junto** a la original sin borrarla (también se cambiaron los
-   *authorities* y el permiso interno, que si no chocarían al instalar).
+## Cómo dejarlo en español y a 60 FPS (S24 Ultra)
 
-## Cómo regenerarlo
+1. Instala el APK y ábrelo. **El primer arranque del juego tarda unos minutos**: compila todos
+   los shaders una sola vez para que el partido no tenga tirones.
+2. *Ajustes → Idioma y controles → Idioma del juego*: **Español latinoamericano** (viene marcado).
+3. Al iniciar el juego aparecen sus pantallas de idioma: elige **Español**.
+   Los textos y comentarios dependen de los paquetes de idioma (`dt20_*.cpk`) de tu ISO. Si tu
+   disco no trae la variante latinoamericana, el juego usa el español que traiga.
+4. Si ves cuadros negros, jugadores negros o tirones: *Controlador gráfico → Descargar un
+   controlador* (Turnip para Adreno 750). Suele ser más rápido y dibuja bien cosas que el
+   controlador de fábrica dibuja mal. Si empeora, *Quitar* lo deja como estaba.
+5. Para ver los FPS: *Ajustes → Avanzado → Indicador de rendimiento → Completo*.
+   Muestra FPS, ms por cuadro, CPU y temperatura.
+
+## Qué cambia respecto al APK original
+
+### 1. Español en la app y en el juego
+* Los 306 textos de la app y 27 textos fijos en el código, traducidos al español latinoamericano
+  (`traduccion/strings_es419.xml`, con comentarios en español).
+* **Idioma dentro del juego** (`scripts/parchear_idioma_motor.py`): en el motor original
+  (`runtime/kernel/misc.cpp`, `pes_imports.cpp`, `xam.cpp`) las funciones con las que el juego
+  pregunta el idioma de la "consola" (`XGetLanguage`, `XamGetLanguage`, `ExGetXConfigSetting`)
+  devolvían **siempre inglés**. Por eso el juego no ofrecía el español. Se reescribieron en
+  ensamblador ARM64 (mismo tamaño y direcciones) para leer `PES17_LANGUAGE`/`PES17_COUNTRY`,
+  que la app fija según el ajuste *Idioma del juego*:
+
+  | Opción | Idioma | Región |
+  |---|---|---|
+  | Español latinoamericano (por defecto) | 5 (español) | 22 (México) |
+  | Español de España | 5 (español) | 31 (España) |
+  | English (original del port) | 1 (inglés) | 6 (la original) |
+
+  `scripts/probar_idioma_motor.py` ejecuta las funciones parcheadas en un emulador ARM64
+  (Unicorn) y comprueba los valores de cada opción.
+
+### 2. Interfaz moderna y minimalista (`scripts/redisenar_interfaz.py`, `parches/res/`)
+* Tema oscuro (#0D1117) con tarjetas redondeadas y **un solo color de acento** (verde #34D399).
+* Sin degradados, barras de colores, imágenes de jugadores de fondo, cursivas ni MAYÚSCULAS forzadas.
+* Pantalla principal nueva: encabezado limpio, menú con indicador de la opción elegida y tarjeta de detalles.
+* Diálogos y barra de estado oscuros. Todos los IDs que usa el código se conservan
+  (comprobado: los 1480 recursos originales mantienen su número).
+
+### 3. Galaxy S24 Ultra a 60 FPS (`parches/Estabilidad.smali`, `perfilS24`)
+Se aplica **una vez** en modelos `SM-S928*`, también encima del perfil de la versión anterior:
+* La calibración oficial **"Alto"** para Adreno 7xx: escena al **75%**, MSAA activado, FSR desactivado,
+  límite de 60 FPS. La versión ES anterior subía la escena al 100% y activaba FSR y panorámica,
+  o sea más carga que la oficial.
+* **Compilar todos los shaders al arrancar**: el partido ya no tiene tirones por shaders.
+* **Pantalla fija a 60 Hz** y **bajar calidad al calentarse**: cuando el teléfono se calienta pierde
+  nitidez en vez de fluidez.
+* Panorámica **desactivada**: estira menús y marcador y dibuja más estadio. Se puede activar en
+  *Ajustes → Pantalla*.
+* Sin cambios de afinidad de núcleos: el motor ya reparte bien el 8 Gen 3
+  (núcleo X4 para el hilo principal, los 5 A720 para el resto).
+
+### 4. Estabilidad y pantalla
+* Modo de poca memoria automático en teléfonos de 6 GB o menos.
+* En Android 9+ el partido usa toda la pantalla, incluida la zona de la cámara.
+
+### 5. Limpieza
+* Se quitó el código que agregó el sitio **apkvision** (forzaba el idioma inglés, mostraba un aviso
+  "APKVISION.ORG" y consultaba "actualizaciones" abriendo el navegador). Las bibliotecas nativas
+  restantes (`libhook_impl`, `libmain_hook`, etc.) son las de *adrenotools* del port, usadas
+  para cargar controladores Turnip.
+
+### 6. ID distinto
+`com.pes2017.recomp.es`, con *authorities* y permiso interno propios para no chocar con la original.
+
+## Cómo regenerar el APK
 
 ```bash
-java -jar apktool.jar d original.apk -o dec
-python3 -I scripts/aplicar_traduccion.py dec traduccion/strings_es419.xml
-python3 -I scripts/traducir_smali.py dec
-python3 -I scripts/aplicar_mejoras.py dec parches
-java -jar apktool.jar b dec -o sin_firmar.apk
-java -jar uber-apk-signer.jar -a sin_firmar.apk --ks pes2017-es.jks --ksAlias pes2017es
+PES_LLAVE_PASS='contraseña' scripts/construir_apk.sh \
+    original.apk apktool.jar uber-apk-signer.jar pes2017-es.jks salida.apk
 ```
 
-Usa siempre la **misma llave** (`pes2017-es.jks`) para firmar versiones nuevas.
-Si no, Android no deja actualizar encima de la anterior. La llave no se sube al
-repositorio (ver `.gitignore`).
+Usa siempre la **misma llave** (`pes2017-es.jks`), porque si no Android no deja actualizar
+encima. La llave **no** se sube al repositorio (ver `.gitignore`).
 
 ## Notas
 
-* Las partidas guardadas y los ajustes de la versión ES son independientes de
-  los de la original. Para pasar tus partidas usa *Ajustes → Archivos del juego →
-  Respaldar partidas* en la original y *Restaurar partidas* en la ES.
-* El botón de "Buscar actualizaciones" apunta a la versión oficial en inglés.
-  Si la instalas, se agrega como la app original, no encima de esta.
+* Las partidas y ajustes de la versión ES son independientes de los de la original. Para pasar tus
+  partidas: en la original, *Settings → Game files → Back up saves*. En la ES,
+  *Ajustes → Archivos → Restaurar partidas*.
+* "Buscar actualizaciones" apunta a la versión oficial en inglés. Si la instalas, se agrega como la
+  app original, no encima de esta.
+* Problema conocido del port oficial: las pantallas de idioma del juego aparecen en cada inicio.

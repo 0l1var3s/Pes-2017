@@ -1,4 +1,6 @@
+# Archivos de compilación y secretos: NUNCA subir la llave de firma ni su contraseña
 *.apk
+!apk/*.apk
 *.idsig
 *.jks
 *.keystore

@@ -70,9 +70,13 @@ def main():
 
     resultado = re.sub(r'<string name="([^"]+)"([^>]*)>(.*?)</string>', reemplazar, original, flags=re.S)
 
-    faltan = set(traducciones) - set(re.findall(r'<string name="([^"]+)"', original))
-    if faltan:
-        errores.append("Cadenas traducidas que no existen en el original: " + ", ".join(sorted(faltan)))
+    # Las cadenas que no existen en el original son textos NUEVOS de esta
+    # versión (por ejemplo el selector de idioma): se agregan al final.
+    nuevas = sorted(set(traducciones) - set(re.findall(r'<string name="([^"]+)"', original)))
+    if nuevas:
+        bloque = "".join(f'    <string name="{n}">{traducciones[n]}</string>\n' for n in nuevas)
+        resultado = resultado.replace("</resources>", bloque + "</resources>")
+        print(f"  {len(nuevas)} textos nuevos agregados: " + ", ".join(nuevas))
 
     if errores:
         print("ERROR: la traducción tiene problemas, no se escribió nada:")

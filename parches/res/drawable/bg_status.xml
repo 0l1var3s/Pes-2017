@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- [ES] Caja de estado dentro de la tarjeta de detalles -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/pes_row" />
+    <corners android:radius="12.0dip" />
+</shape>

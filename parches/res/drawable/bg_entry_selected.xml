@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- [ES] Opción elegida del menú: fondo redondeado con un tinte verde muy suave -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="#ff16231f" />
+    <corners android:radius="12.0dip" />
+    <stroke android:width="1.0dip" android:color="#5934d399" />
+</shape>

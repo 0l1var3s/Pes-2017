@@ -9,9 +9,9 @@ versión en español:
   1. ESTABILIDAD: agrega la clase Estabilidad.smali y la conecta en
      GameActivity para activar el "Modo de poca memoria" en teléfonos de
      6 GB de RAM o menos (evita que Android cierre el partido).
-  2. INTERFAZ: textos del menú que se ajustan solos al espacio (los textos en
-     español son más largos), panel de detalles más legible y con más
-     espacio, pestañas de Ajustes en hasta 2 líneas y pistas más grandes.
+  2. IDIOMA DEL JUEGO: selector en Ajustes (español latinoamericano, de
+     España o inglés) que la app le pasa al motor parcheado.
+     (El rediseño de la interfaz está en scripts/redisenar_interfaz.py.)
   3. ADAPTACIÓN A LA PANTALLA: en Android 9+ el partido usa también la zona
      del notch / cámara perforada (antes quedaba una franja negra).
   4. GALAXY S24 ULTRA: perfil optimizado que se aplica en el primer inicio
@@ -44,8 +44,9 @@ def reemplazar(ruta, viejo, nuevo, veces=1):
 
 def mejora_estabilidad(base, parches):
     # Copiamos la clase nueva junto a las demás clases de la app
-    shutil.copy(os.path.join(parches, "Estabilidad.smali"),
-                os.path.join(base, "smali/com/pes2017/recomp/Estabilidad.smali"))
+    for clase in ("Estabilidad.smali", "Estabilidad$Idioma.smali"):
+        shutil.copy(os.path.join(parches, clase),
+                    os.path.join(base, "smali/com/pes2017/recomp", clase))
     # Justo después de leer la preferencia "lowMemory" pasamos el valor por
     # Estabilidad.memoriaBaja(). v6 es la GameActivity (un Context).
     ruta = os.path.join(base, "smali/com/pes2017/recomp/GameActivity.smali")
@@ -65,63 +66,56 @@ def mejora_estabilidad(base, parches):
     print("  [ok] Estabilidad: modo de poca memoria automático")
 
 
-def mejora_interfaz(base):
-    estilos = os.path.join(base, "res/values/styles.xml")
+def mejora_idioma(base):
+    # a) GameActivity: justo después de PES17_FULLSCREEN le pasamos al motor el
+    #    idioma elegido (PES17_LANGUAGE / PES17_COUNTRY). v6 = GameActivity, v12 = NativeBridge.
+    ruta = os.path.join(base, "smali/com/pes2017/recomp/GameActivity.smali")
+    viejo = ('    const-string v0, "PES17_FULLSCREEN"\n\n'
+             '    const-string v1, "1"\n\n'
+             '    invoke-virtual {v12, v0, v1}, Lcom/pes2017/recomp/NativeBridge;->nativeSetOption(Ljava/lang/String;Ljava/lang/String;)V\n')
+    reemplazar(ruta, viejo, viejo +
+               '\n    # [ES] Idioma del juego elegido en Ajustes\n'
+               '    invoke-static {v6, v12}, Lcom/pes2017/recomp/Estabilidad;->opcionesMotor(Landroid/content/Context;Lcom/pes2017/recomp/NativeBridge;)V\n')
 
-    # Menú principal: el texto se achica solo si no cabe (mínimo 10sp) y
-    # nunca se corta en dos líneas.
-    reemplazar(estilos,
-               '        <item name="android:letterSpacing">0.04</item>\n    </style>',
-               '        <item name="android:letterSpacing">0.04</item>\n'
-               '        <item name="android:maxLines">1</item>\n'
-               '        <item name="android:autoSizeTextType">uniform</item>\n'
-               '        <item name="android:autoSizeMinTextSize">10.0sp</item>\n'
-               '        <item name="android:autoSizeMaxTextSize">17.0sp</item>\n'
-               '        <item name="android:autoSizeStepGranularity">1.0sp</item>\n'
-               '    </style>')
+    # b) SettingsActivity: al final de onCreate conectamos el selector de idioma
+    ruta = os.path.join(base, "smali/com/pes2017/recomp/SettingsActivity.smali")
+    viejo = ('    invoke-direct {v2, v0, v7}, LS/k1;-><init>(Landroid/widget/TextView;Lcom/pes2017/recomp/SettingsActivity;)V\n\n'
+             '    invoke-virtual {v1, v2}, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V\n\n'
+             '    return-void\n')
+    reemplazar(ruta, viejo, viejo.replace('    return-void\n',
+               '    # [ES] Selector "Idioma del juego"\n'
+               '    invoke-static {v7}, Lcom/pes2017/recomp/Estabilidad;->configurarIdioma(Landroid/app/Activity;)V\n\n'
+               '    return-void\n'))
 
-    # Pestañas de Ajustes: "GRÁFICOS Y RENDIMIENTO" es largo, permitimos 2 líneas
-    reemplazar(estilos,
-               '        <item name="android:minHeight">34.0dip</item>\n        <item name="android:layout_weight">1.0</item>',
-               '        <item name="android:minHeight">38.0dip</item>\n        <item name="android:layout_weight">1.0</item>\n'
-               '        <item name="android:maxLines">2</item>\n'
-               '        <item name="android:paddingStart">4.0dip</item>\n'
-               '        <item name="android:paddingEnd">4.0dip</item>')
+    # c) Ids nuevos del selector
+    ruta = os.path.join(base, "res/values/ids.xml")
+    reemplazar(ruta, "</resources>",
+               '    <item type="id" name="idioma_juego" />\n'
+               '    <item type="id" name="idioma_latam" />\n'
+               '    <item type="id" name="idioma_espana" />\n'
+               '    <item type="id" name="idioma_ingles" />\n</resources>')
 
-    # Pistas de ajustes: un punto más grandes y con más interlineado
-    reemplazar(estilos,
-               '    <style name="SettingHint">\n        <item name="android:textSize">11.0sp</item>',
-               '    <style name="SettingHint">\n        <item name="android:textSize">12.0sp</item>\n'
-               '        <item name="android:lineSpacingExtra">2.0dip</item>')
-
-    # Pantalla principal (horizontal y vertical)
-    for nombre in ("res/layout/activity_main.xml", "res/layout-port/activity_main.xml"):
-        ruta = os.path.join(base, nombre)
-        # Botón JUGAR: tamaño máximo mayor para que destaque
-        reemplazar(ruta,
-                   'android:textSize="19.0sp" android:textColor="@color/pes_red" android:id="@id/play"',
-                   'android:textSize="19.0sp" android:autoSizeMaxTextSize="21.0sp" android:textColor="@color/pes_red" android:id="@id/play"')
-        # Etiqueta de versión legible
-        reemplazar(ruta, 'android:textSize="9.0sp" android:textColor="@color/pes_muted" android:gravity="end" android:id="@id/version_tag"',
-                   'android:textSize="10.0sp" android:textColor="@color/pes_muted" android:gravity="end" android:id="@id/version_tag"')
-        # Texto del panel de detalles: más grande y con más líneas visibles
-        reemplazar(ruta, 'android:textSize="11.0sp" android:textColor="@color/pes_text" android:ellipsize="end" android:id="@id/detail_text"',
-                   'android:textSize="12.0sp" android:textColor="@color/pes_text" android:ellipsize="end" android:id="@id/detail_text"')
-        reemplazar(ruta, 'android:maxLines="6" android:lineSpacingExtra="2.0dip"',
-                   'android:maxLines="9" android:lineSpacingExtra="2.0dip"')
-        reemplazar(ruta, 'android:textSize="11.0sp" android:textColor="@color/pes_blue" android:ellipsize="end" android:id="@id/status"',
-                   'android:textSize="12.0sp" android:textColor="@color/pes_blue" android:ellipsize="end" android:id="@id/status"')
-        reemplazar(ruta, 'android:maxLines="5" android:lineSpacingExtra="2.0dip"',
-                   'android:maxLines="7" android:lineSpacingExtra="2.0dip"')
-        # Interruptor "empezar al abrir": un poco más grande para tocarlo fácil
-        reemplazar(ruta, 'android:textSize="10.0sp" android:textColor="@color/pes_muted" android:id="@id/direct_launch_switch"',
-                   'android:textSize="11.0sp" android:textColor="@color/pes_muted" android:id="@id/direct_launch_switch"')
-
-    # En horizontal el panel dejaba 96dp vacíos a la derecha: lo reducimos
-    reemplazar(os.path.join(base, "res/layout/activity_main.xml"),
-               'android:layout_weight="0.9" android:layout_marginStart="4.0dip" android:layout_marginEnd="96.0dip"',
-               'android:layout_weight="1.0" android:layout_marginStart="4.0dip" android:layout_marginEnd="56.0dip"')
-    print("  [ok] Interfaz: textos adaptables y panel más legible")
+    # d) Sección "Idioma del juego" al principio de la pestaña de controles
+    ruta = os.path.join(base, "res/layout/activity_settings.xml")
+    ancla = ('<LinearLayout android:orientation="vertical" android:id="@id/page_controls" '
+             'android:layout_width="fill_parent" android:layout_height="wrap_content">')
+    boton = ('<RadioButton android:textColor="@color/pes_text" android:id="@id/idioma_{0}" '
+             'android:layout_width="fill_parent" android:layout_height="wrap_content" '
+             'android:minHeight="44.0dip" android:text="@string/idioma_{0}" />')
+    seccion = (ancla +
+               '\n                    <!-- [ES] Idioma del juego (lo lee el motor parcheado) -->'
+               '\n                    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" '
+               'android:text="@string/section_language" style="@style/SectionHeading" />'
+               '\n                    <LinearLayout style="@style/SettingGroup">'
+               '\n                        <RadioGroup android:orientation="vertical" android:id="@id/idioma_juego" '
+               'android:layout_width="fill_parent" android:layout_height="wrap_content">'
+               + "".join("\n                            " + boton.format(x) for x in ("latam", "espana", "ingles")) +
+               '\n                        </RadioGroup>'
+               '\n                        <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" '
+               'android:text="@string/idioma_hint" style="@style/SettingHint" />'
+               '\n                    </LinearLayout>')
+    reemplazar(ruta, ancla, seccion)
+    print("  [ok] Idioma del juego: selector en Ajustes y opción para el motor")
 
 
 def mejora_pantalla(base):
@@ -178,7 +172,10 @@ def mejora_id(base):
                f'android:authorities="{PAQUETE_NUEVO}.androidx-startup"')
     # Nombre de versión con sufijo para identificarla
     yml = os.path.join(base, "apktool.yml")
-    reemplazar(yml, "versionName: 0.2.0 (425cb0d)", "versionName: 0.2.0-es (425cb0d)")
+    reemplazar(yml, "versionName: 0.2.0 (425cb0d)", "versionName: 0.2.0-es.2 (425cb0d)")
+    # versionCode mayor que el de la versión ES anterior (40), para que se
+    # instale encima como actualización conservando ajustes y partidas
+    reemplazar(yml, "versionCode: 40", "versionCode: 42")
     print(f"  [ok] ID nuevo: {PAQUETE_NUEVO}")
 
 
@@ -188,7 +185,7 @@ def main():
         sys.exit(1)
     base, parches = sys.argv[1], sys.argv[2]
     mejora_estabilidad(base, parches)
-    mejora_interfaz(base)
+    mejora_idioma(base)
     mejora_pantalla(base)
     mejora_s24_y_quitar_apkvision(base)
     mejora_id(base)
