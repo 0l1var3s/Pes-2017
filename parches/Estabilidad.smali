@@ -84,3 +84,107 @@
     :catch_0
     return p1
 .end method
+
+# ============================================================================
+# perfilS24(contexto):
+#   Perfil optimizado para el Samsung Galaxy S24 Ultra (modelos SM-S928*:
+#   Snapdragon 8 Gen 3 for Galaxy, GPU Adreno 750, 12 GB de RAM, pantalla
+#   QHD+ 3120x1440 de 19.5:9 a 120 Hz con cámara perforada).
+#
+#   Se aplica UNA sola vez, en el primer inicio, y solo si el usuario todavía
+#   no configuró nada. Después se pueden cambiar todos los ajustes libremente.
+#     * Calidad de renderizado del partido al 100% (la Adreno 750 sobra para
+#       la escena de 1280x720 de la consola).
+#     * FSR activado: escala con nitidez de 720p a la pantalla QHD+.
+#     * Suavizado de bordes (MSAA) activado.
+#     * Multiplicador interno 1x: 2x se puede probar, pero calienta mucho.
+#     * Bajar la calidad al calentarse: ACTIVADO (el S24 Ultra limita la GPU
+#       cuando se calienta; así se pierde nitidez en vez de fluidez).
+#     * Pantalla fija a 60 Hz: el juego va a 60 FPS; 120 Hz solo gasta batería
+#       y hace irregular el ritmo de los cuadros.
+#     * Pantalla panorámica: llena la pantalla 19.5:9 sin barras negras.
+#     * Modo de poca memoria desactivado (tiene 12 GB).
+# ============================================================================
+.method public static perfilS24(Landroid/content/Context;)V
+    .locals 5
+
+    :try_start_0
+    # ¿Es un Galaxy S24 Ultra? (SM-S928B, SM-S928U, SM-S928N, SM-S9280...)
+    sget-object v0, Landroid/os/Build;->MODEL:Ljava/lang/String;
+    if-eqz v0, :cond_fin
+    const-string v1, "SM-S928"
+    invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+    move-result v1
+    if-eqz v1, :cond_fin
+
+    const-string v0, "pes17"
+    const/4 v1, 0x0
+    invoke-virtual {p0, v0, v1}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+    move-result-object v0
+
+    # Si ya se aplicó antes, no hacemos nada
+    const-string v2, "es_perfil_s24"
+    invoke-interface {v0, v2}, Landroid/content/SharedPreferences;->contains(Ljava/lang/String;)Z
+    move-result v3
+    if-nez v3, :cond_fin
+
+    # ¿El usuario ya tiene un perfil elegido? (v4 = true si NO tiene)
+    const-string v3, "performancePreset"
+    const-string v4, ""
+    invoke-interface {v0, v3, v4}, Landroid/content/SharedPreferences;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    move-result-object v4
+    invoke-virtual {v4}, Ljava/lang/String;->isEmpty()Z
+    move-result v4
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+    move-result-object v0
+
+    # Marcamos que ya se revisó este teléfono
+    const/4 v1, 0x1
+    invoke-interface {v0, v2, v1}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;
+
+    # Si el usuario ya tenía ajustes, solo guardamos la marca
+    if-eqz v4, :cond_guardar
+
+    const-string v2, "performancePreset"
+    const-string v3, "CUSTOM"
+    invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences$Editor;->putString(Ljava/lang/String;Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;
+
+    const-string v2, "sceneScale"
+    const/16 v3, 0x64
+    invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences$Editor;->putInt(Ljava/lang/String;I)Landroid/content/SharedPreferences$Editor;
+
+    const-string v2, "renderScale"
+    const/4 v3, 0x1
+    invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences$Editor;->putInt(Ljava/lang/String;I)Landroid/content/SharedPreferences$Editor;
+
+    const/4 v3, 0x1
+    const-string v2, "multisampling"
+    invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;
+    const-string v2, "fsr"
+    invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;
+    const-string v2, "heatScale"
+    invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;
+    const-string v2, "prefer60Hz"
+    invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;
+    const-string v2, "widescreen"
+    invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;
+
+    const/4 v3, 0x0
+    const-string v2, "lowMemory"
+    invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;
+    const-string v2, "loadScale"
+    invoke-interface {v0, v2, v3}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;
+
+    :cond_guardar
+    invoke-interface {v0}, Landroid/content/SharedPreferences$Editor;->apply()V
+    :try_end_0
+    .catch Ljava/lang/Throwable; {:try_start_0 .. :try_end_0} :catch_0
+
+    :cond_fin
+    return-void
+
+    # Si algo falla, la app sigue con sus valores normales
+    :catch_0
+    return-void
+.end method

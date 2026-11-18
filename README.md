@@ -48,7 +48,24 @@ El RAR (2 partes) se extrajo bien y el APK se decompiló y recompiló sin errore
    * Los perfiles automáticos (Bajo/Medio/Alto según el teléfono) de la app
      original se mantienen. Como el ID es nuevo, arrancan desde cero y se
      vuelven a detectar en el primer inicio.
-4. **ID distinto** — `com.pes2017.recomp.es`, nombre **"PES 2017 ES"**. Se
+4. **Optimizado para Galaxy S24 Ultra** (`Estabilidad.perfilS24`, modelos `SM-S928*`).
+   En el primer inicio, si todavía no configuraste nada, se aplica:
+   * Calidad de renderizado del partido **100%** (la Adreno 750 tiene margen de sobra).
+   * **FSR** activado: escala con nitidez de 720p a la pantalla QHD+ (3120×1440).
+   * **MSAA** activado (líneas de la cancha sin cortes).
+   * **Bajar calidad al calentarse** activado: cuando el S24 Ultra se calienta
+     pierde algo de nitidez en vez de tirones.
+   * **Pantalla fija a 60 Hz**: el juego va a 60 FPS; 120 Hz solo gasta batería.
+   * **Pantalla panorámica**: llena la pantalla 19.5:9 sin barras negras
+     (los menús se estiran a lo ancho; se puede desactivar en Ajustes → Pantalla).
+   * Multiplicador interno en 1x. Puedes probar 2x (2560×1440) en Ajustes,
+     pero calienta bastante.
+   Después puedes cambiar todo libremente; el perfil queda como "Personalizado".
+5. **Código de apkvision quitado.** El sitio de descarga había agregado código
+   al APK que **forzaba el idioma inglés**, mostraba un aviso "APKVISION.ORG" y
+   consultaba "actualizaciones" por internet abriendo el navegador. No es parte
+   del port y se eliminó.
+6. **ID distinto** — `com.pes2017.recomp.es`, nombre **"PES 2017 ES"**. Se
    instala **junto** a la original sin borrarla (también se cambiaron los
    *authorities* y el permiso interno, que si no chocarían al instalar).
 

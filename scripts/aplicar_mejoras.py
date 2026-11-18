@@ -14,7 +14,12 @@ versión en español:
      espacio, pestañas de Ajustes en hasta 2 líneas y pistas más grandes.
   3. ADAPTACIÓN A LA PANTALLA: en Android 9+ el partido usa también la zona
      del notch / cámara perforada (antes quedaba una franja negra).
-  4. ID NUEVO: cambia el paquete a com.pes2017.recomp.es (y los "authorities"
+  4. GALAXY S24 ULTRA: perfil optimizado que se aplica en el primer inicio
+     (ver Estabilidad.perfilS24 en parches/Estabilidad.smali).
+  5. SIN CÓDIGO DE APKVISION: se quita el código que el sitio de descarga
+     agregó al APK (forzaba el idioma inglés, mostraba un aviso "APKVISION.ORG"
+     y consultaba "actualizaciones" por internet abriendo el navegador).
+  6. ID NUEVO: cambia el paquete a com.pes2017.recomp.es (y los "authorities"
      y el permiso interno) para poder instalarla junto a la original.
 
 Uso:
@@ -136,6 +141,29 @@ def mejora_pantalla(base):
     print("  [ok] Pantalla: partido a pantalla completa con notch")
 
 
+def mejora_s24_y_quitar_apkvision(base):
+    ruta = os.path.join(base, "smali/com/pes2017/recomp/MainActivity.smali")
+    # En lugar del código de apkvision, llamamos al perfil del S24 Ultra.
+    # Va justo después de super.onCreate() y ANTES de que la app elija su
+    # perfil automático, así ese perfil no pisa nuestros valores.
+    reemplazar(ruta,
+               "    invoke-static/range {p0 .. p0}, Lorg/apkvision/port135145/Entry;->show(Landroid/app/Activity;)V",
+               "    # [ES] Se quitó el código de apkvision (forzaba inglés y mostraba avisos)\n"
+               "    # [ES] Perfil optimizado para Galaxy S24 Ultra (solo en el primer inicio)\n"
+               "    invoke-static {p0}, Lcom/pes2017/recomp/Estabilidad;->perfilS24(Landroid/content/Context;)V")
+    # Borramos las clases de apkvision, que ya nadie usa
+    for carpeta in ("smali_classes3/org/apkvision", "smali_classes2/io/avm"):
+        shutil.rmtree(os.path.join(base, carpeta), ignore_errors=True)
+    # Si una carpeta smali_classesN quedó sin clases, la borramos completa
+    # (si no, apktool genera un classesN.dex vacío)
+    for carpeta in ("smali_classes2", "smali_classes3"):
+        ruta_c = os.path.join(base, carpeta)
+        vacia = not any(f.endswith(".smali") for _, _, fs in os.walk(ruta_c) for f in fs)
+        if os.path.isdir(ruta_c) and vacia:
+            shutil.rmtree(ruta_c)
+    print("  [ok] Perfil Galaxy S24 Ultra y código de apkvision quitado")
+
+
 def mejora_id(base):
     ruta = os.path.join(base, "AndroidManifest.xml")
     # Paquete (ID de la app)
@@ -162,6 +190,7 @@ def main():
     mejora_estabilidad(base, parches)
     mejora_interfaz(base)
     mejora_pantalla(base)
+    mejora_s24_y_quitar_apkvision(base)
     mejora_id(base)
     print("Listo: todas las mejoras aplicadas")
 
