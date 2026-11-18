@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ============================================================================
+  PES 2017 (port recompilado para Android) — Textos en español latinoamericano
+  ============================================================================
+  Este archivo contiene la traducción de TODOS los textos propios de la app
+  (306 cadenas). El script scripts/aplicar_traduccion.py reemplaza con estas
+  cadenas las originales en inglés de res/values/strings.xml, de modo que la
+  app se vea en español sin importar el idioma configurado en el teléfono.
+
+  Reglas importantes para editar este archivo:
+    * No cambies el atributo name="...": la app busca cada texto por ese nombre.
+    * Respeta los marcadores de formato (%1$s, %2$d, %1$.1f, %%). El script
+      verifica que coincidan con los del original y se detiene si no.
+    * Usa \n para saltos de línea y \' para apóstrofos.
+    * Los nombres entre paréntesis como (PES17_SCALE) son variables internas
+      del motor; se dejan igual para facilitar el soporte técnico.
+  ============================================================================
+-->
+<resources>
+
+    <!-- ===================== Nombre de la app y menú principal ===================== -->
+    <!-- Se agrega "ES" para distinguir el ícono de la app original instalada al lado -->
+    <string name="app_name">PES 2017 ES</string>
+    <string name="wordmark">PES17 Recompilado para Android</string>
+    <string name="play">¡A JUGAR!</string>
+    <string name="entry_select_folder">ELEGIR CARPETA DEL JUEGO</string>
+    <string name="entry_install">INSTALAR DESDE IMAGEN ISO</string>
+    <string name="entry_settings">AJUSTES</string>
+    <string name="graphics_driver">Controlador gráfico</string>
+    <string name="view_log">Registro</string>
+    <string name="check_updates">BUSCAR ACTUALIZACIONES</string>
+    <string name="quit_launcher">SALIR</string>
+    <string name="direct_launch">Empezar el partido apenas se abra la app</string>
+    <string name="detail_default_title">MENÚ PRINCIPAL</string>
+    <string name="detail_default_text">Elige una opción: aquí verás sus detalles y al tocarla se ejecuta de inmediato.</string>
+    <string name="footer">%1$s ● Controlador: %2$s ● Compilación %3$s, %4$s ● PORT NO OFICIAL HECHO POR FANS. SIN RELACIÓN CON KONAMI. USA TU PROPIA COPIA DEL JUEGO.</string>
+    <string name="version_tag">%1$s · compilación %2$d · EUROPA</string>
+
+    <!-- ===================== Estado del juego (panel derecho) ===================== -->
+    <string name="status_ready">¡Partido listo!\nCarpeta del juego: %1$s</string>
+    <string name="status_ready_auto">¡Partido listo! Se encontraron los archivos del juego en este teléfono:\n%1$s</string>
+    <string name="status_not_installed">Todavía no se eligió la carpeta del juego.\n\nEsta app no incluye datos del juego. Elige la carpeta con tu propia copia de PES 2017 o instálalo desde una imagen de disco (.iso).</string>
+    <string name="status_folder_missing">La carpeta del juego elegida ya no existe o no se puede leer:\n%1$s\n\nVuelve a elegirla.</string>
+    <string name="status_library_missing">No se pudo cargar el motor del juego:\n%1$s</string>
+    <string name="status_needs_access">La carpeta del juego está configurada, pero Android todavía no le dio permiso a la app para leerla:\n%1$s</string>
+    <string name="cannot_start">No se pudo iniciar el juego</string>
+    <string name="last_crash">La app se cerró inesperadamente la última vez</string>
+    <string name="error_library">No se pudo cargar la biblioteca del motor:\n%1$s</string>
+    <string name="error_not_installed">Los archivos del juego no están instalados. Instálalos primero desde el menú principal.</string>
+    <string name="error_start">El motor no pudo arrancar. En el registro están los detalles.</string>
+    <string name="unknown_reason">sin motivo indicado</string>
+
+    <!-- ===================== Botones generales ===================== -->
+    <string name="back">◀ Volver</string>
+    <string name="cancel">Cancelar</string>
+    <string name="close">Cerrar</string>
+    <string name="done">Listo</string>
+    <string name="share">Compartir</string>
+    <string name="reset">Restablecer</string>
+    <string name="restore">Restaurar</string>
+    <string name="menu">Menú</string>
+    <string name="paused">En pausa</string>
+    <string name="resume">Continuar</string>
+    <string name="quit">Salir</string>
+    <string name="quit_explained">El juego se cierra ahora. Se pierde todo lo que el juego no haya guardado.</string>
+    <string name="shown">Visible</string>
+    <string name="size">Tamaño</string>
+    <string name="opacity">Opacidad</string>
+    <string name="snap">Ajustar a la cuadrícula</string>
+    <string name="toggle">Se queda presionado</string>
+
+    <!-- ===================== Carpeta del juego y permisos de almacenamiento ===================== -->
+    <string name="access_title">Se necesita acceso al almacenamiento</string>
+    <string name="access_explained">El juego lee sus archivos por ruta, y Android solo permite hacerlo fuera de la carpeta de la app si activas “Acceso a todos los archivos”. Actívalo en la siguiente pantalla y regresa: la carpeta que elegiste queda guardada.\n\nTambién puedes copiar los archivos dentro de la app; no requiere permiso, pero ocupa el doble de espacio.</string>
+    <string name="allow_storage">Permitir acceso al almacenamiento</string>
+    <string name="copy_instead">Copiar dentro de la app</string>
+    <string name="folder_title">Carpeta del juego</string>
+    <string name="folder_found_inside">Se encontró el juego una carpeta más adentro:\n%1$s</string>
+    <string name="folder_import_explained">¿Copiar %1$s de archivos del juego (default.xex y los archivos .cpk) dentro de la app? Hay %2$s libres.</string>
+    <string name="folder_no_xex">Esa carpeta no tiene default.xex. Elige la carpeta que contiene default.xex y los archivos .cpk.</string>
+    <string name="folder_set">El juego se ejecutará desde:\n%1$s\n\nLas partidas guardadas y la caché se guardan en la carpeta superior.</string>
+    <string name="folder_unreadable_path">Android entrega esta carpeta como documento, no como ruta, así que el juego no puede ejecutarse desde ahí.</string>
+    <string name="folder_use_anyway">Usar de todos modos</string>
+    <string name="folder_use_here">Usar esta carpeta</string>
+    <string name="use_this_folder">Usar esta carpeta</string>
+    <string name="folder_wrong_game">Este default.xex no es el ejecutable de PES 2017 (Europa) del que se recompiló esta app. Es posible que no funcione.</string>
+    <string name="forget_install">Olvidar la carpeta del juego</string>
+    <string name="forget_explained">Los archivos se quedan en el teléfono; la app simplemente deja de usarlos y puedes elegir otra carpeta. Si los archivos siguen en un lugar donde la app busca, los volverá a encontrar sola.</string>
+    <string name="select_folder_hint">Primero la app busca el juego por su cuenta en el teléfono. Si no lo encuentra, indícale la carpeta con tus archivos de PES 2017 (default.xex y los archivos .cpk). Si Android todavía no le dio permiso para leer esa parte del almacenamiento, te lo pedirá antes.</string>
+    <string name="paths_line">Carpeta del juego:\n%1$s</string>
+    <string name="paths_none">Todavía no se eligió la carpeta del juego.</string>
+    <string name="up_one">.. (subir un nivel)</string>
+    <string name="storage_computing">Calculando…</string>
+    <string name="storage_explained">Android solo permite a una app leer archivos fuera de su carpeta si tú lo autorizas. Si no lo autorizas, coloca la imagen de disco en Android/data/%1$s/files y elígela desde ahí.</string>
+    <string name="storage_granted">Acceso al almacenamiento: permitido</string>
+    <string name="storage_not_granted">Acceso al almacenamiento: no permitido (es necesario para ejecutar desde una carpeta fuera de la app)</string>
+    <string name="storage_line">%1$s: %2$s</string>
+
+    <!-- ===================== Instalación desde imagen de disco (.iso) ===================== -->
+    <string name="install_game">Instalar los archivos del juego</string>
+    <string name="install_hint">Elige una imagen de disco (.iso) de tu propia copia de PES 2017, o la carpeta donde extrajiste sus archivos (default.xex y los archivos .cpk). Solo se copian a la app los archivos que el juego necesita; se requieren unos 7 GB libres.</string>
+    <string name="begin_install">Instalar</string>
+    <string name="install_and_play">INSTALAR Y JUGAR</string>
+    <string name="choose_source">Explorar el almacenamiento del teléfono</string>
+    <string name="pick_with_files">Elegir con la app Archivos</string>
+    <string name="pick_folder">Copiar una carpeta del juego ya extraída (no requiere permiso)</string>
+    <string name="import_file">Importar</string>
+    <string name="import_explained">La app Archivos entrega un documento en lugar de una ruta, así que primero se copia el archivo dentro de esta app: %1$s ahora, y unos 7 GB más para el juego instalado. Hay %2$s libres.\n\nSi te falta espacio, usa “Explorar el almacenamiento del teléfono”: lee el archivo donde está.</string>
+    <string name="import_explained_unknown">La app Archivos entrega un documento en lugar de una ruta, así que primero se copia el archivo dentro de esta app. Una imagen de disco pesa varios gigabytes y el juego instalado necesita unos 7 GB más.\n\nSi te falta espacio, usa “Explorar el almacenamiento del teléfono”: lee el archivo donde está.</string>
+    <string name="chosen">Instalando desde:\n%1$s</string>
+    <string name="no_source">Todavía no elegiste nada.</string>
+    <string name="no_space">No hay suficiente espacio libre: %1$s libres, se necesitan unos 7 GB.</string>
+    <string name="copying">Copiando: %1$s</string>
+    <string name="copying_file">Copiando %1$s (%2$d%%)</string>
+    <string name="installing">%1$s (%2$d%%)</string>
+    <string name="install_done">Los archivos del juego quedaron instalados.</string>
+    <string name="install_failed">La instalación no terminó:\n%1$s</string>
+    <string name="install_cancelled">Cancelado. Lo que ya se copió se conserva, así que al volver a empezar continúa desde ahí.</string>
+    <string name="install_running_warning">La instalación sigue en curso. Si sales ahora se detiene; podrás continuarla después.</string>
+
+    <!-- ===================== Pestañas de Ajustes ===================== -->
+    <string name="settings_hint">Imagen, rendimiento, controles y archivos del juego de este port.</string>
+    <string name="settings_help_strip">Cada cambio se guarda al instante y se aplica cuando empieza el siguiente partido. Presiona Volver para regresar al menú.</string>
+    <string name="tab_graphics">GRÁFICOS Y RENDIMIENTO</string>
+    <string name="tab_controls">CONTROLES Y SONIDO</string>
+    <string name="tab_advanced">AVANZADO</string>
+    <string name="tab_files">ARCHIVOS DEL JUEGO</string>
+    <string name="advanced_warning">Para experimentar y resolver problemas. Los valores predeterminados sirven para la mayoría de los teléfonos; las pestañas de Gráficos y Rendimiento cubren los cambios habituales.</string>
+
+    <!-- ===================== Secciones ===================== -->
+    <string name="section_preset">Perfil de calidad</string>
+    <string name="section_display">Pantalla</string>
+    <string name="section_image_quality">Calidad de imagen</string>
+    <string name="section_frame_rate">Cuadros por segundo</string>
+    <string name="section_thermal">Temperatura y batería</string>
+    <string name="section_memory">Memoria y carga</string>
+    <string name="section_rendering">Renderizado</string>
+    <string name="section_hud">Indicador de rendimiento</string>
+    <string name="section_controls">Controles</string>
+    <string name="section_sound">Sonido</string>
+    <string name="section_files">Archivos del juego</string>
+    <string name="section_saves">Partidas guardadas</string>
+    <string name="section_storage">Almacenamiento</string>
+    <string name="section_developer">Desarrollador</string>
+    <string name="section_testing">Pruebas</string>
+    <string name="section_experiments">Experimentos (para cazar errores)</string>
+
+    <!-- ===================== Perfiles de calidad (presets) ===================== -->
+    <string name="preset_label">Perfil: %1$s</string>
+    <string name="preset_low">Bajo</string>
+    <string name="preset_medium">Medio</string>
+    <string name="preset_high">Alto</string>
+    <string name="preset_custom">Personalizado</string>
+    <string name="preset_gpu_unknown">GPU desconocida</string>
+    <string name="preset_detected">Este teléfono parece un %1$s (%2$s; %3$s, %4$d núcleos rápidos a %5$d MHz, %6$.1f GB). Un perfil ajusta la calidad de renderizado, las reglas de temperatura y carga de la GPU, el suavizado, FSR, el límite de FPS y el modo de poca memoria; si cambias cualquiera de ellos después, el perfil pasa a “Personalizado”.</string>
+
+    <!-- ===================== Pantalla e imagen ===================== -->
+    <string name="resolution">Resolución de pantalla: %1$d%%</string>
+    <string name="resolution_hint">Cuántos píxeles se dibujan en la pantalla, como porcentaje de ella. La pantalla escala el resultado. PES dibuja a 1280×720 fijos, así que esto sobre todo cambia nitidez por batería.</string>
+    <string name="widescreen">Pantalla panorámica (llenar la pantalla)</string>
+    <string name="widescreen_hint">Ensancha la cámara del juego a la forma del teléfono y llena toda la pantalla en vez de mostrar barras negras a los lados (PES17_ASPECT). Los menús y el marcador se estiran a lo ancho. Se aplica al siguiente inicio.</string>
+    <string name="ball_scale">Tamaño del balón: %1$d%%</string>
+    <string name="ball_scale_hint">Dibuja el balón más grande para que sea más fácil de seguir en una pantalla chica (PES17_BALL_SCALE). 100% es el tamaño original.</string>
+    <string name="render_scale">Multiplicador de renderizado interno: %1$dx</string>
+    <string name="render_scale_hint">Dibuja el partido a 2x o 3x los 1280×720 de la consola (PES17_SCALE). Exige mucha GPU; déjalo en 1x salvo que al teléfono le sobre potencia.</string>
+    <string name="scene_scale">Calidad de renderizado del partido: %1$d%%</string>
+    <string name="scene_scale_hint" formatted="false">Qué tan grande se dibuja la escena 3D antes de estirarla al cuadro (PES17_SCENE_SCALE). 75% es el valor predeterminado: cerca de 44% menos píxeles para una imagen que la mayoría de los jugadores no distingue. Sube a 100% en un teléfono potente.</string>
+    <string name="msaa">Suavizar bordes (multimuestreo)</string>
+    <string name="msaa_hint">Evita que las líneas finas de la cancha se corten en rayitas. Cuesta poco en la mayoría de los teléfonos; desactívalo si el partido se traba.</string>
+    <string name="fsr">Escalado más nítido (FSR)</string>
+    <string name="fsr_hint">Usa el escalado y enfoque AMD FSR en lugar de un estiramiento simple. Cuesta algunos cuadros si el teléfono está caliente.</string>
+    <string name="fsr_sharp">Nitidez: %1$.1f</string>
+    <string name="frame_gen">Generación de cuadros (de 30 a 60, experimental)</string>
+    <string name="frame_gen_hint">El juego dibuja 30 cuadros por segundo y se genera un cuadro intermedio entre cada par, así la pantalla de 60 Hz se ve fluida con la mitad del trabajo y del calor. Los movimientos rápidos pueden verse suaves. Activa el límite de 30 FPS mientras esté encendido. Experimental: la interfaz puede parpadear y el teléfono debe mantener 30 FPS estables.</string>
+    <string name="black_guard">Protección contra cuadros negros (experimental)</string>
+    <string name="black_guard_hint">Para teléfonos en los que la imagen parpadea en negro cada tercer cuadro: un cuadro negro aislado se reemplaza por el anterior. Lee cada cuadro, así que cuesta velocidad. Se aplica al siguiente inicio del juego.</string>
+    <string name="crowd">Público en el estadio</string>
+    <string name="crowd_hint">Desactivado deja las tribunas vacías y le ahorra al motor y a la GPU dibujar al público, lo que mantiene el teléfono un poco más fresco durante el partido. El juego lo sigue animando. Se aplica la próxima vez que inicie el juego.</string>
+
+    <!-- ===================== Cuadros por segundo, temperatura y rendimiento ===================== -->
+    <string name="fps_limit">Límite de cuadros por segundo: %1$d FPS</string>
+    <string name="fps_limit_off">Límite de cuadros por segundo: desactivado (60 FPS)</string>
+    <string name="fps_limit_hint">Saca al partido del ritmo de 60 Hz y lo limita a esta cantidad de cuadros por segundo (PES17_FPS_LIMIT). Más bajo = más fresco y más batería. En una pantalla de 60 Hz, 30 da el movimiento más parejo; de 35 a 55 puede verse a tirones.</string>
+    <string name="prefer_60">Fijar la pantalla a 60 Hz</string>
+    <string name="prefer_60_hint">El cuadro de la consola es de 60 Hz. Fijarlo evita un ritmo irregular y ahorra batería en pantallas de 90/120 Hz.</string>
+    <string name="heat_scale">Bajar la calidad cuando se calienta</string>
+    <string name="heat_scale_hint">La calidad de renderizado del partido pasa a ser el máximo al que se dibuja la imagen. Cuando Android avisa que el teléfono se calienta (moderado, severo, crítico), la imagen baja hasta 50% antes de que la GPU se ralentice, y vuelve a subir al enfriarse (PES17_HEAT_SCALE). Cada paso se mantiene unos segundos; al cambiar, la escena se vuelve a dibujar un momento.</string>
+    <string name="load_scale">Bajar la calidad cuando la GPU se atrasa</string>
+    <string name="load_scale_hint">Baja la imagen cuando los pasos de renderizado tardan demasiado para el cuadro y la vuelve a subir cuando hay margen (PES17_LOAD_SCALE). Solo mide el tiempo de la GPU, que en el Snapdragon 865 no era lo que hacía lento un partido, así que ahí casi no actúa. Experimental.</string>
+    <string name="perf_hint">Sugerencia de rendimiento al sistema</string>
+    <string name="perf_hint_hint">Le dice a Android cuánto tardó cada cuadro para que suba o baje la velocidad de CPU y GPU (PES17_HINT). No hace nada en teléfonos que la rechazan, como el Snapdragon 865 con Android 13; desactívala si el teléfono se calienta más con ella.</string>
+    <string name="low_memory">Modo de poca memoria</string>
+    <string name="low_memory_hint">Omite el búfer grande de sombras de vértices (PES17_NO_SHADOW). Úsalo en teléfonos de 6 GB o menos, o si el partido se cierra en segundo plano.</string>
+    <string name="prewarm_all">Compilar todos los shaders al arrancar</string>
+    <string name="prewarm_all_hint">Compila todos los pipelines registrados antes de la pantalla de título en vez de durante el juego. La primera vez el arranque tarda minutos, pero después el partido no tiene tirones por shaders.</string>
+    <string name="texture_budget">Memoria para texturas: %1$d MB</string>
+    <string name="texture_budget_auto">Memoria para texturas: elegida para este teléfono</string>
+    <string name="texture_hint">Cuánto puede guardar la caché de texturas antes de soltar lo que no se dibujó hace rato. Si no la tocas, el motor elige un valor según la memoria del teléfono.</string>
+    <string name="arena_auto">Automático</string>
+    <string name="arena_hint">Tamaño de la memoria de cuadros en MB. Los teléfonos con mucha memoria usan uno grande por defecto; uno más chico es el que usan los teléfonos que se ven bien.</string>
+    <string name="clear_shaders">Borrar caché de shaders</string>
+    <string name="shaders_cleared">Caché de shaders borrada. Los shaders se vuelven a crear mientras juegas.</string>
+
+    <!-- ===================== Indicador de rendimiento (HUD) ===================== -->
+    <string name="hud_menu">Indicador de rendimiento</string>
+    <string name="hud_off">Apagado</string>
+    <string name="hud_minimal">Mínimo</string>
+    <string name="hud_normal">Normal</string>
+    <string name="hud_complete">Completo</string>
+    <string name="hud_level_hint">El indicador de la esquina superior izquierda en un partido. Mínimo: cuadros por segundo. Normal: suma tiempo por cuadro y temperatura. Completo: suma CPU, memoria y texturas en una segunda línea. También en un partido: pausa y elige “Indicador de rendimiento”.</string>
+
+    <!-- ===================== Menú rápido de gráficos (dentro del partido) ===================== -->
+    <string name="qg_menu">Gráficos y rendimiento</string>
+    <string name="qg_title">Gráficos y rendimiento</string>
+    <string name="qg_preset">Perfil</string>
+    <string name="qg_scale">Resolución interna: %1$dx (1x = 1280x720; 2x o 3x para GPU potentes)</string>
+    <string name="qg_scene">Resolución de la escena: %1$d%%</string>
+    <string name="qg_fps">Límite de FPS: %1$d</string>
+    <string name="qg_msaa">Antialiasing (MSAA)</string>
+    <string name="qg_fsr">Escalador FSR</string>
+    <string name="qg_heat">Bajar la imagen cuando el teléfono se calienta</string>
+    <string name="qg_lowmem">Modo de poca memoria (sin búfer de sombras)</string>
+    <string name="qg_crowd">Público</string>
+    <string name="qg_note">Los ajustes de imagen se leen al empezar un partido, así que aplicarlos reinicia el juego (tarda lo mismo que iniciarlo). Tus partidas guardadas se conservan.</string>
+    <string name="qg_apply">Aplicar y reiniciar</string>
+
+    <!-- ===================== Controles ===================== -->
+    <string name="touch_controls">Controles en pantalla</string>
+    <string name="show_touch_controls">Mostrar los controles en pantalla</string>
+    <string name="hide_touch_controls">Ocultar los controles en pantalla</string>
+    <string name="arrange_controls">Acomodar los controles en pantalla</string>
+    <string name="arrange_controls_hint">Arrastra un control para moverlo, pellízcalo o usa el control deslizante para cambiar su tamaño, y oculta los que no uses. Si sueltas un control sobre otro, este se hace a un lado. También en un partido: pausa y elige “Editar controles”.</string>
+    <string name="arrange_hint">Toca un control para tomarlo</string>
+    <string name="edit_controls">Editar controles</string>
+    <string name="edit_hint">Aquí los controles ocultos se ven tenues para que puedas volver a activarlos.</string>
+    <string name="edit_pick_one">Toca un control para tomarlo. Arrástralo para moverlo y pellízcalo para cambiar el tamaño.</string>
+    <string name="edit_selected">%1$s — arrastra para mover, pellizca para cambiar el tamaño</string>
+    <string name="reset_one">Restablecer este</string>
+    <string name="reset_all">Restablecer todo</string>
+    <string name="reset_all_explained">Todos los controles vuelven a su posición y tamaño originales.</string>
+    <string name="button_style">Etiquetas de los botones</string>
+    <string name="button_style_playstation">PlayStation (✕ ○ □ △)</string>
+    <string name="button_style_xbox">Xbox (A B X Y)</string>
+    <string name="use_gamepad">Usar un control físico</string>
+    <string name="enable_gamepad">Usar controles físicos</string>
+    <string name="disable_gamepad">Ignorar controles físicos</string>
+    <string name="gamepad_hint">Desactívalo para ignorar por completo los controles. Algunos teléfonos detectan un accesorio como control con una palanca descentrada, y eso hace que un jugador corra solo.</string>
+    <string name="gamepad_p2">El control físico es el jugador 2 (pruebas)</string>
+    <string name="gamepad_p2_hint">Los controles táctiles siguen siendo el jugador 1; el primer control físico maneja al jugador 2. Se aplica al iniciar un partido.</string>
+    <string name="vibration">Vibración</string>
+    <string name="audio_on">Sonido</string>
+
+    <!-- ===================== Controlador gráfico (Turnip / Mesa) ===================== -->
+    <string name="driver_hint">Los teléfonos con GPU Adreno pueden usar el controlador Turnip de Mesa, que muchas veces es bastante más rápido que el de fábrica y a veces dibuja bien cosas que el de fábrica dibuja mal. Importa el .zip del controlador tal como lo descargaste; se descomprime en el almacenamiento propio de la app.</string>
+    <string name="driver_system">El controlador propio del teléfono</string>
+    <string name="driver_in_use">En uso: %1$s</string>
+    <string name="driver_api">Vulkan %1$s, para Android API %2$d o superior</string>
+    <string name="import_driver">Importar un controlador (.zip)</string>
+    <string name="download_driver">Descargar un controlador</string>
+    <string name="driver_downloading">Descargando el controlador…</string>
+    <string name="driver_downloaded">Se descargó %1$s y quedó como controlador.</string>
+    <string name="driver_download_failed">La descarga falló. Revisa la conexión e inténtalo de nuevo.</string>
+    <string name="driver_imported">Se importó %1$s.</string>
+    <string name="driver_bad_zip">Ese archivo no parece un controlador: no tiene un meta.json que indique la biblioteca que contiene.</string>
+    <string name="driver_not_arm64">Ese controlador no es para este teléfono (se necesita arm64).</string>
+    <string name="driver_none_for_gpu">No hay controlador descargable para la GPU de este teléfono: solo existen para Adreno 6xx, 7xx y 8xx.</string>
+    <string name="driver_remove">Quitar</string>
+    <string name="driver_removed">Quitado.</string>
+    <string name="driver_source_recommended">Recomendado para esta GPU (Turnip, K11MCH1 / StevenMXZ)</string>
+    <string name="driver_source_purple">MrPurple Turnip (unificado, Android 11 o superior)</string>
+
+    <!-- ===================== Experimentos de renderizado ===================== -->
+    <string name="experiments_hint">Para teléfonos con algún error de imagen, como un parpadeo negro o jugadores negros. Cambia una opción a la vez, reinicia el juego, juega un partido y captúralo (CAPTURA) indicando lo que viste. Si no ayuda, vuelve a dejarla como estaba. Se aplica al siguiente inicio.</string>
+    <string name="exp_bc_hw">Decodificación de texturas por hardware en Adreno</string>
+    <string name="exp_bc_hw_hint">Deja que la GPU decodifique las texturas BC en lugar de la CPU. Desactivado por defecto en Qualcomm por un viejo parpadeo.</string>
+    <string name="exp_dynamic_depth">Estado de profundidad por dibujo en Adreno</string>
+    <string name="exp_dynamic_depth_hint">Configura profundidad, stencil y culling en cada dibujo en vez de fijarlos en los pipelines (en Qualcomm vienen fijos por defecto).</string>
+    <string name="exp_legacy">Ruta de renderizado clásica</string>
+    <string name="exp_legacy_hint">Dibuja con render passes y estado fijo, como hacen los teléfonos más viejos, en lugar de renderizado dinámico.</string>
+    <string name="exp_no_table">Omitir el paso de tabla de color</string>
+    <string name="exp_no_table_hint">Muestra el cuadro sin la tabla de color de pantalla del juego.</string>
+
+    <!-- ===================== Herramientas de desarrollador, capturas y macros ===================== -->
+    <string name="developer_tools">Herramientas de desarrollador</string>
+    <string name="developer_tools_hint">Muestra en el partido las herramientas de depuración: el botón CAPTURA, el botón GRABAR MACRO junto a Menú, la reproducción de macros en el menú de pausa, la tarjeta de detalle y la consola del indicador, y las opciones de prueba de abajo. Déjalo apagado para jugar.</string>
+    <string name="captures_title">Capturas</string>
+    <string name="captures_open">Administrar capturas</string>
+    <string name="captures_hint">Toca una captura para compartirla, guardarla en Descargas o borrarla. Mantén presionado para borrar. Cada una es una carpeta con registros, ajustes, informes del motor y de la pantalla, y cuadros de imagen.</string>
+    <string name="captures_none">Todavía no hay capturas. Activa Ajustes > Avanzado > Herramientas de desarrollador y luego presiona CAPTURA en un partido.</string>
+    <string name="captures_row">%1$s, %2$d archivos</string>
+    <string name="captures_summary">%1$d capturas, %2$s</string>
+    <string name="captures_delete">Borrar</string>
+    <string name="captures_delete_one">¿Borrar esta captura del teléfono?</string>
+    <string name="captures_clear_all">Borrar todas las capturas</string>
+    <string name="captures_clear_all_body">Se borrarán todas las capturas del teléfono. Las que ya compartiste o guardaste en otro lugar no se tocan.</string>
+    <string name="captures_save_folder">Guardar en Descargas</string>
+    <string name="captures_saved_to">Guardado en %1$s</string>
+    <string name="captures_save_failed">No se pudo crear o guardar el zip.</string>
+    <string name="capture_started">Captura iniciada: juega y presiona DETENER cuando haya ocurrido el problema.</string>
+    <string name="capture_stop_title">Guardar la captura</string>
+    <string name="capture_name_hint">Nombre (por ejemplo parpadeo-saque)</string>
+    <string name="capture_note_hint">¿Qué salió mal?</string>
+    <string name="capture_save">Guardar</string>
+    <string name="capture_discard">Descartar</string>
+    <string name="capture_saving">Guardando…</string>
+    <string name="capture_saved">Guardada: captures/%1$s. Comparte su nombre con quien te dé soporte.</string>
+    <string name="capture_saved_title">Captura guardada</string>
+    <string name="capture_saved_body">Guardada como captures/%1$s. Compártela para enviar todo el contenido de la carpeta (registro, ajustes, informe del motor y de la pantalla, cuadros) en un solo zip.</string>
+    <string name="capture_share">Compartir</string>
+    <string name="capture_failed">La captura falló: %1$s</string>
+    <string name="macro_record">Grabar macro del control</string>
+    <string name="macro_recording">Grabando el control… presiona DETENER GRAB. para terminar.</string>
+    <string name="macro_stop_record">Detener grabación</string>
+    <string name="macro_play">Reproducir macro</string>
+    <string name="macro_stop_play">Detener macro</string>
+    <string name="macro_name_title">Ponle nombre a esta macro</string>
+    <string name="macro_name_hint">Nombre de la macro</string>
+    <string name="macro_save">Guardar</string>
+    <string name="macro_saved">Se guardaron %1$d eventos como “%2$s”.</string>
+    <string name="macro_existing">Ya guardadas: %1$s</string>
+    <string name="macro_none">Todavía no hay macros grabadas.</string>
+    <string name="macro_nothing">No se grabó nada: primero presiona algo en el control.</string>
+    <string name="macro_done">Macro: %1$s</string>
+
+    <!-- ===================== Registro (log) ===================== -->
+    <string name="log_counts">%1$d errores, %2$d advertencias</string>
+    <string name="log_empty">Todavía no hay nada registrado.</string>
+    <string name="log_everything">El registro completo</string>
+    <string name="log_more">y %1$d más, contados pero no mostrados</string>
+    <string name="log_none">No hubo errores ni advertencias en esta sesión.</string>
+    <string name="log_share_note">Al compartir se envía el registro completo, no este resumen.</string>
+    <string name="log_stopped">La última sesión se detuvo:</string>
+    <string name="log_where">Dónde se quedó:</string>
+    <string name="clear_logs">Borrar registros</string>
+    <string name="logs_cleared">Registros borrados.</string>
+
+    <!-- ===================== Partidas guardadas (respaldo y restauración) ===================== -->
+    <string name="saves_files">Partidas guardadas</string>
+    <string name="saves_none">Todavía no hay partidas guardadas en %1$s.</string>
+    <string name="saves_summary">%1$d paquetes de partidas en %2$s: %3$s</string>
+    <string name="saves_backup_hint">Liga Máster, Ser una Leyenda, datos de edición y ajustes, todo en un zip que puedes guardar donde quieras (Descargas, Drive). También se hace una copia automática cada vez que juegas desde el menú; se conservan las últimas 5. Al restaurar, tus partidas actuales se guardan como saves.before-restore-… junto a ellas.</string>
+    <string name="backup_saves">Respaldar partidas…</string>
+    <string name="backup_done">Se respaldaron %1$d archivos.</string>
+    <string name="backup_failed">El respaldo falló: %1$s</string>
+    <string name="restore_saves">Restaurar partidas…</string>
+    <string name="restore_from_file">Desde un archivo de respaldo…</string>
+    <string name="restore_auto_entry">Automático: %1$s</string>
+    <string name="restore_confirm_title">¿Reemplazar tus partidas guardadas?</string>
+    <string name="restore_confirm">Las partidas que hay ahora en el teléfono se apartan (no se borran) y las del respaldo toman su lugar.</string>
+    <string name="restore_done">Se restauraron %1$d archivos.</string>
+    <string name="restore_failed">La restauración falló: %1$s</string>
+    <string name="restore_game_running">Primero cierra el juego: no se pueden reemplazar sus partidas mientras está en ejecución.</string>
+
+    <!-- ===================== Juego en segundo plano (notificación) ===================== -->
+    <string name="run_channel">Hay un juego en ejecución</string>
+    <string name="run_working">En ejecución. Salir de la app no cierra el juego.</string>
+
+    <!-- ===================== Actualizaciones ===================== -->
+    <string name="up_to_date">Ya tienes la versión más reciente.</string>
+    <string name="update_title">Actualización disponible: %1$s</string>
+    <string name="update_message">Esta instalación es la compilación %1$d y la publicada es la %2$d.\n\nAviso: esta es una versión modificada en español con otro ID; la actualización oficial se instalaría como la app original, no encima de esta.</string>
+    <string name="update_download">Descargar e instalar</string>
+    <string name="update_downloading">Descargando actualización…</string>
+    <string name="update_failed">La descarga falló. Abre la página de versiones.</string>
+    <string name="open_page">Página de versiones</string>
+    <string name="skip_version">Omitir esta versión</string>
+</resources>
